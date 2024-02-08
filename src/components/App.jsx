@@ -22,7 +22,7 @@ export const App = () => {
       <h1 className="text-stone-700 text-6xl  font-bold text-center">
         Phonebook
       </h1>
-      <FormNewPhone onAddPhone={handleAddPhone} />
+      <FormNewPhone phoneList={projectState} onAddPhone={handleAddPhone} />
       <Contacts phoneList={projectState} onDelete={handleDeletePhone} />
     </div>
   );

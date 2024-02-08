@@ -14,7 +14,7 @@ export default class FormNewPhone extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { onAddPhone } = this.props;
+    const { onAddPhone, phoneList } = this.props;
 
     if (!validateName(this.state.name)) {
       this.setState(prevState => {
@@ -22,6 +22,11 @@ export default class FormNewPhone extends Component {
           validation: { ...prevState.validation, name: false },
         };
       });
+      return;
+    }
+
+    if (phoneList.some(({ name }) => name === this.state.name)) {
+      window.alert(`${this.state.name} is already in contacts.`);
       return;
     }
 
