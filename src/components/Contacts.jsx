@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Input from './Input';
-import Contact from './Contact';
+import Contact from './ContactItem';
 
 export default class Contacts extends Component {
   state = { findInput: '' };
@@ -36,7 +36,6 @@ export default class Contacts extends Component {
           label="Find contacts by name"
           onChange={this.handleInputChange}
           value={this.state.findInput}
-          isValid={true}
         />
         <ul className="flex flex-col gap-3">
           {filteredPhoneLIst.map(phone => (

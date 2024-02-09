@@ -10,7 +10,7 @@ export default class Input extends Component {
   };
 
   render() {
-    const { type, name, label, value, invalidMessage, isValid } = this.props;
+    const { name, label, pattern, title, required, type, value } = this.props;
 
     return (
       <p className="flex flex-col gap-3  w-full">
@@ -23,12 +23,12 @@ export default class Input extends Component {
           type={type}
           id={name}
           name={name}
-          onChange={this.handleOnChange}
           value={value}
+          onChange={this.handleOnChange}
+          pattern={pattern}
+          title={title}
+          required={required}
         />
-        {!isValid && (
-          <span className="text-sm text-red-600 ">{invalidMessage}</span>
-        )}
       </p>
     );
   }

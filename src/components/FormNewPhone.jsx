@@ -1,53 +1,25 @@
-import { validateName, validatePhoneNumber } from 'helpers/input-validation';
 import Input from './Input';
 import { Component } from 'react';
-import { v4 as uuid } from 'uuid';
 
 const INITIAL_STATE = {
   name: '',
   phone: '',
-  validation: { name: true, phone: true },
 };
 
 export default class FormNewPhone extends Component {
-  state = { ...INITIAL_STATE, validation: { ...INITIAL_STATE.validation } };
+  state = { ...INITIAL_STATE };
 
   handleSubmit = event => {
     event.preventDefault();
-    const { onAddPhone, phoneList } = this.props;
-
-    if (!validateName(this.state.name)) {
-      this.setState(prevState => {
-        return {
-          validation: { ...prevState.validation, name: false },
-        };
-      });
-      return;
-    }
-
-    if (phoneList.some(({ name }) => name === this.state.name)) {
-      window.alert(`${this.state.name} is already in contacts.`);
-      return;
-    }
-
-    if (!validatePhoneNumber(this.state.phone)) {
-      this.setState(prevState => {
-        return {
-          validation: { ...prevState.validation, phone: false },
-        };
-      });
-      return;
-    }
+    const { onAddPhone } = this.props;
 
     onAddPhone({
-      id: uuid(),
       name: this.state.name,
       phone: this.state.phone,
     });
 
     this.setState({
       ...INITIAL_STATE,
-      validation: { ...INITIAL_STATE.validation },
     });
   };
 
@@ -67,8 +39,9 @@ export default class FormNewPhone extends Component {
           label="Name"
           onChange={this.handleInputChange}
           value={this.state.name}
-          isValid={this.state.validation.name}
-          invalidMessage="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          pattern="^[a-zA-Zа-яА-Я]+((\[' -\]\\\[a-zA-Zа-яА-Я \])?\[a-zA-Zа-яА-Я\]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          required={true}
         />
         <Input
           type="tel"
@@ -76,8 +49,9 @@ export default class FormNewPhone extends Component {
           label="Phone"
           onChange={this.handleInputChange}
           value={this.state.phone}
-          isValid={this.state.validation.phone}
-          invalidMessage="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          pattern="[0-9]+"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required={true}
         />
         <button
           type="submit"
